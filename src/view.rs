@@ -1,5 +1,5 @@
 pub trait Into<V, O, A> {
-    fn into(self) -> Self;
+    fn into(self) -> A;
 }
 
 pub trait From<V, O>: Eq where View<V, O, Self>: Into<V, O, Self> {

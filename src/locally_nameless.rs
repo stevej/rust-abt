@@ -66,7 +66,7 @@ impl<V, O> Abt<V, O> where
     }
 }
 
-impl<V, O> View<V, O, Abt<V, O>> where
+impl<V, O> Into<V, O, Abt<V, O>> for View<V, O, Abt<V, O>> where
     V: Variable,
     O: Operator,
 {
