@@ -1,6 +1,5 @@
 use std::cell::{RefCell};
 use std::fmt;
-use std::thread;
 
 thread_local!(static COUNTER: RefCell<u64> = RefCell::new(0));
 
