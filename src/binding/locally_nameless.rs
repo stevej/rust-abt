@@ -1,4 +1,5 @@
 use operator::{Operator};
+use std::fmt;
 use variable::{Variable};
 use view::{From, Into, View};
 
@@ -143,4 +144,37 @@ pub fn var<V, O>(x: V) -> Abt<V, O> where
     O: Operator,
 {
     View::Var(x).into()
+}
+
+impl<V, O> fmt::Display for Abt<V, O> where
+    V: Variable,
+    O: Operator,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+        match self.clone().from() {
+            View::Var(v) => {
+                try!(write!(f, "{}", v));
+            }
+            View::Abs(v, e) => {
+                try!(write!(f, "{}.{}", v, e));
+            }
+            View::App(o, es) => {
+                try!(write!(f, "{}", o));
+                if es.len() > 0 {
+                    let mut i = 0;
+                    try!(write!(f, "("));
+                    while i < es.len() * 2 - 1 {
+                        if i & 1 == 0 {
+                            try!(write!(f, "{}", es[i]));
+                        } else {
+                            try!(write!(f, "; "));
+                        }
+                        i += 1;
+                    }
+                    try!(write!(f, ")"));
+                }
+            }
+        }
+        write!(f, "")
+    }
 }
