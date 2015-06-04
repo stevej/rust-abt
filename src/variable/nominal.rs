@@ -1,4 +1,5 @@
 use std::cell::{RefCell};
+use std::fmt;
 use std::thread;
 
 thread_local!(static COUNTER: RefCell<u64> = RefCell::new(0));
@@ -12,7 +13,6 @@ fn with_fresh<F, R>(k: F) -> R where
     })
 }
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Nominal {
     name: String,
     index: u64
@@ -23,6 +23,20 @@ impl Clone for Nominal {
         with_fresh(|n| {
             Nominal { name: self.name.clone(), index: n }
         })
+    }
+}
+
+impl PartialEq for Nominal {
+    fn eq(&self, other: &Self) -> bool {
+        self.index == other.index
+    }
+}
+
+impl Eq for Nominal {}
+
+impl fmt::Debug for Nominal {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}@{}", self.name, self.index)
     }
 }
 
