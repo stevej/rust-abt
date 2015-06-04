@@ -8,7 +8,7 @@ pub trait From<V, O>: Eq where View<V, O, Self>: Into<V, O, Self> {
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum View<V, O, A> {
-    View(V),
+    Var(V),
     Abs(V, A),
     App(O, Vec<A>),
 }

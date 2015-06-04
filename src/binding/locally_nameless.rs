@@ -74,7 +74,7 @@ impl<V, O> Into<V, O, Abt<V, O>> for View<V, O, Abt<V, O>> where
 {
     fn into(self) -> Abt<V, O> {
         match self {
-            View::View(v) => {
+            View::Var(v) => {
                 Abt::Free(v)
             }
             View::Abs(v, e) => {
@@ -108,7 +108,7 @@ impl<V, O> From<V, O> for Abt<V, O> where
     fn from(self) -> View<V, O, Abt<V, O>> {
         match self {
             Abt::Free(v) => {
-                View::View(v)
+                View::Var(v)
             }
             Abt::Bound(_) => {
                 panic!()
@@ -122,4 +122,25 @@ impl<V, O> From<V, O> for Abt<V, O> where
             }
         }
     }
+}
+
+pub fn abs<V, O>(x: V, e: Abt<V, O>) -> Abt<V, O> where
+    V: Variable,
+    O: Operator,
+{
+    View::Abs(x, e).into()
+}
+
+pub fn app<V, O>(o: O, es: Vec<Abt<V, O>>) -> Abt<V, O> where
+    V: Variable,
+    O: Operator,
+{
+    View::App(o, es).into()
+}
+
+pub fn var<V, O>(x: V) -> Abt<V, O> where
+    V: Variable,
+    O: Operator,
+{
+    View::Var(x).into()
 }
