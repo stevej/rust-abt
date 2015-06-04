@@ -165,7 +165,7 @@ impl<V, O> fmt::Display for Abt<V, O> where
                     try!(write!(f, "("));
                     while i < es.len() * 2 - 1 {
                         if i & 1 == 0 {
-                            try!(write!(f, "{}", es[i]));
+                            try!(write!(f, "{}", es[i / 2]));
                         } else {
                             try!(write!(f, "; "));
                         }
