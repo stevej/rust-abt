@@ -108,7 +108,7 @@ impl<V, O> From<V, O> for Abt<V, O> where
             Abt::Free(v) => {
                 View::View(v)
             }
-            Abt::Bound(n) => {
+            Abt::Bound(_) => {
                 panic!()
             }
             Abt::Abs(x, e) => {
