@@ -36,5 +36,6 @@ impl Operator for Op {
 #[test]
 fn example() {
     let x: Nominal = Variable::new("x".to_string());
-    println!("{}", app(Op::Lam, vec![abs(x.clone(), var(x))]));
+    let str = format!("{}", app(Op::Lam, vec![abs(x.clone(), var(x))]));
+    assert_eq!("λ(x.x)", str);
 }
