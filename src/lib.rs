@@ -1,4 +1,4 @@
-mod binding;
-mod operator;
-mod variable;
-mod view;
+pub mod binding;
+pub mod operator;
+pub mod variable;
+pub mod view;

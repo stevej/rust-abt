@@ -1,6 +1,6 @@
 use std::fmt::{Display};
 
-mod nominal;
+pub mod nominal;
 
 pub trait Variable: Clone + Eq + Ord + Display {
     fn named(String) -> Self;
