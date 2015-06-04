@@ -42,7 +42,7 @@ impl Ord for Nominal {
 
 impl fmt::Display for Nominal {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}@{}", self.name, self.index)
+        write!(f, "{}", self.name())
     }
 }
 
