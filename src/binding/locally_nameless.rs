@@ -39,7 +39,8 @@ impl<V, O> Abt<V, O> where
                 Abt::Abs(x, Box::new(e.shift_var(v, n + 1)))
             }
             Abt::App(o, es) => {
-                Abt::App(o, unimplemented!())
+                let res = es.iter().map(|e| e.clone().shift_var(v.clone(), n));
+                Abt::App(o, res.collect::<_>())
             }
         }
     }
@@ -60,7 +61,8 @@ impl<V, O> Abt<V, O> where
                 Abt::Abs(x, Box::new(e.add_var(v, n + 1)))
             }
             Abt::App(o, es) => {
-                Abt::App(o, unimplemented!())
+                let res = es.iter().map(|e| e.clone().add_var(v.clone(), n));
+                Abt::App(o, res.collect::<_>())
             }
         }
     }
