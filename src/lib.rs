@@ -1,4 +1,4 @@
-mod locally_nameless;
+mod binding;
 mod operator;
 mod variable;
 mod view;
