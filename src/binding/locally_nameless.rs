@@ -3,7 +3,7 @@ use variable::{Variable};
 use view::{From, Into, View};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-enum Abt<V, O> where V: Variable, O: Operator {
+pub enum Abt<V, O> where V: Variable, O: Operator {
     Free(V),
     Bound(u64),
     Abs(V, Box<Abt<V, O>>),
@@ -14,7 +14,7 @@ impl<V, O> Abt<V, O> where
     V: Variable,
     O: Operator,
 {
-    fn match_arity(&self, n: u64) -> bool {
+    pub fn match_arity(&self, n: u64) -> bool {
         match self {
             &Abt::Abs(_, _) if n == 0 => { false }
             &Abt::Abs(_, ref e) => { e.match_arity(n - 1) }
@@ -23,7 +23,7 @@ impl<V, O> Abt<V, O> where
         }
     }
 
-    fn shift_var(self, v: V, n: u64) -> Self {
+    pub fn shift_var(self, v: V, n: u64) -> Self {
         match self {
             Abt::Free(fv) => {
                 if v == fv {
@@ -44,7 +44,7 @@ impl<V, O> Abt<V, O> where
         }
     }
 
-    fn add_var(self, v: V, n: u64) -> Self {
+    pub fn add_var(self, v: V, n: u64) -> Self {
         match self {
             Abt::Free(fv) => {
                 Abt::Free(fv)
