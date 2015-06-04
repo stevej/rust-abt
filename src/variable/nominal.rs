@@ -18,6 +18,14 @@ pub struct Nominal {
     index: u64
 }
 
+impl Clone for Nominal {
+    fn clone(&self) -> Nominal {
+        with_fresh(|n| {
+            Nominal { name: self.name.clone(), index: n }
+        })
+    }
+}
+
 impl Nominal {
     pub fn new(x: String) -> Nominal {
         with_fresh(|n| {
