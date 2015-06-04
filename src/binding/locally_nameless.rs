@@ -112,7 +112,8 @@ impl<V, O> From<V, O> for Abt<V, O> where
                 panic!()
             }
             Abt::Abs(x, e) => {
-                unimplemented!()
+                let v = x.dup();
+                View::Abs(v.clone(), e.add_var(v, 0))
             }
             Abt::App(o, es) => {
                 View::App(o, es)
