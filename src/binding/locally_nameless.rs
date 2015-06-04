@@ -81,7 +81,7 @@ impl<V, O> Into<V, O, Abt<V, O>> for View<V, O, Abt<V, O>> where
                 Abt::Abs(v.clone(), Box::new(e.shift_var(v, 0)))
             }
             View::App(o, es) => {
-                let ar = o.clone().arity();
+                let ar = o.arity();
                 if ar.len() != es.len() {
                     panic!()
                 } else {
