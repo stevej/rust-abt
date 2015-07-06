@@ -1,1 +1,3 @@
-# Abstract binding trees in Rust
+# rust-abt
+
+Abstract binding trees in Rust
