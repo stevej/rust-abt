@@ -1,7 +1,7 @@
 use operator::{Operator};
 use std::fmt;
 use variable::{Variable};
-use view::{From, Into, View};
+use view::{Unroll, Roll, View};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum Abt<V, O> where V: Variable, O: Operator {
@@ -69,11 +69,11 @@ impl<V, O> Abt<V, O> where
     }
 }
 
-impl<V, O> Into<V, O, Abt<V, O>> for View<V, O, Abt<V, O>> where
+impl<V, O> Roll<V, O, Abt<V, O>> for View<V, O, Abt<V, O>> where
     V: Variable,
     O: Operator,
 {
-    fn into_a(self) -> Abt<V, O> {
+    fn roll(self) -> Abt<V, O> {
         match self {
             View::Var(v) => {
                 Abt::Free(v)
@@ -101,12 +101,12 @@ impl<V, O> Into<V, O, Abt<V, O>> for View<V, O, Abt<V, O>> where
     }
 }
 
-impl<V, O> From<V, O> for Abt<V, O> where
+impl<V, O> Unroll<V, O> for Abt<V, O> where
     V: Variable,
     O: Operator,
-    View<V, O, Abt<V, O>>: Into<V, O, Abt<V, O>>,
+    View<V, O, Abt<V, O>>: Roll<V, O, Abt<V, O>>,
 {
-    fn from_a(self) -> View<V, O, Abt<V, O>> {
+    fn unroll(self) -> View<V, O, Abt<V, O>> {
         match self {
             Abt::Free(v) => {
                 View::Var(v)
@@ -129,21 +129,21 @@ pub fn abs<V, O>(x: V, e: Abt<V, O>) -> Abt<V, O> where
     V: Variable,
     O: Operator,
 {
-    View::Abs(x, e).into_a()
+    View::Abs(x, e).roll()
 }
 
 pub fn app<V, O>(o: O, es: Vec<Abt<V, O>>) -> Abt<V, O> where
     V: Variable,
     O: Operator,
 {
-    View::App(o, es).into_a()
+    View::App(o, es).roll()
 }
 
 pub fn var<V, O>(x: V) -> Abt<V, O> where
     V: Variable,
     O: Operator,
 {
-    View::Var(x).into_a()
+    View::Var(x).roll()
 }
 
 impl<V, O> fmt::Display for Abt<V, O> where
@@ -151,7 +151,7 @@ impl<V, O> fmt::Display for Abt<V, O> where
     O: Operator,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-        match self.clone().from_a() {
+        match self.clone().unroll() {
             View::Var(v) => {
                 try!(write!(f, "{}", v));
             }
